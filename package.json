@@ -1,0 +1,170 @@
+{
+  "$schema": "https://www.raycast.com/schemas/extension.json",
+  "name": "go2rtc-cameras",
+  "title": "Go2rtc Cameras",
+  "description": "Find every camera on a go2rtc server and open it in a browser or your preferred media player.",
+  "icon": "icon.png",
+  "author": "rainnworks",
+  "platforms": [
+    "macOS",
+    "Windows"
+  ],
+  "categories": [
+    "Media"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/Rainnworks/raycast-go2rtc-cameras#readme",
+  "repository": "https://github.com/Rainnworks/raycast-go2rtc-cameras",
+  "bugs": "https://github.com/Rainnworks/raycast-go2rtc-cameras/issues",
+  "keywords": [
+    "camera",
+    "cctv",
+    "go2rtc",
+    "home assistant",
+    "rtsp",
+    "surveillance"
+  ],
+  "preferences": [
+    {
+      "name": "serverUrl",
+      "title": "go2rtc Address",
+      "description": "The address of your go2rtc WebUI. A root address, subpath, or pasted stream page link all work.",
+      "type": "textfield",
+      "required": true,
+      "placeholder": "http://192.168.1.10:1984"
+    },
+    {
+      "name": "username",
+      "title": "Username",
+      "description": "Optional HTTP Basic Auth username for the go2rtc WebUI.",
+      "type": "textfield",
+      "required": false,
+      "placeholder": "admin"
+    },
+    {
+      "name": "password",
+      "title": "Password",
+      "description": "Optional HTTP Basic Auth password. Raycast stores password preferences securely.",
+      "type": "password",
+      "required": false
+    },
+    {
+      "name": "defaultAction",
+      "title": "Default Action",
+      "description": "Choose what pressing Return on a camera does.",
+      "type": "dropdown",
+      "required": true,
+      "default": "browser",
+      "data": [
+        {
+          "title": "Open go2rtc Player in Browser",
+          "value": "browser"
+        },
+        {
+          "title": "Open Stream in Preferred App",
+          "value": "application"
+        }
+      ]
+    },
+    {
+      "name": "preferredApplication",
+      "title": "Preferred App",
+      "description": "Optional media player for streams, such as IINA, VLC, or mpv. The browser remains the fallback.",
+      "type": "appPicker",
+      "required": false
+    },
+    {
+      "name": "playbackFormat",
+      "title": "Player Stream Format",
+      "description": "HTTP MP4 works through most reverse proxies. RTSP usually has the lowest latency but needs port 8554 to be reachable.",
+      "type": "dropdown",
+      "required": true,
+      "default": "mp4",
+      "data": [
+        {
+          "title": "HTTP MP4 (Most Compatible)",
+          "value": "mp4"
+        },
+        {
+          "title": "HLS",
+          "value": "hls"
+        },
+        {
+          "title": "RTSP (Lowest Latency)",
+          "value": "rtsp"
+        }
+      ]
+    },
+    {
+      "name": "rtspBaseUrl",
+      "title": "RTSP Address",
+      "description": "Optional. Used only for RTSP; defaults to the go2rtc hostname on port 8554.",
+      "type": "textfield",
+      "required": false,
+      "placeholder": "rtsp://192.168.1.10:8554"
+    },
+    {
+      "name": "passCredentialsToPlayer",
+      "title": "Pass Login to Player",
+      "description": "Embed the WebUI login in HTTP player URLs. Enable only if your player needs it; media apps may retain opened URLs in history or logs.",
+      "type": "checkbox",
+      "required": false,
+      "default": false,
+      "label": "Include the go2rtc username and password when opening a preferred app"
+    }
+  ],
+  "commands": [
+    {
+      "name": "browse-cameras",
+      "title": "Browse Cameras",
+      "subtitle": "go2rtc",
+      "description": "Search and open cameras from your go2rtc server.",
+      "mode": "view"
+    },
+    {
+      "name": "open-camera",
+      "title": "Open Camera",
+      "subtitle": "go2rtc",
+      "description": "Open a named go2rtc camera. Useful as a Raycast Quicklink target.",
+      "mode": "no-view",
+      "arguments": [
+        {
+          "name": "camera",
+          "type": "text",
+          "placeholder": "Camera name",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "export-camera-quicklinks",
+      "title": "Export Camera Quicklinks",
+      "subtitle": "go2rtc",
+      "description": "Create one importable Raycast Quicklink for every camera.",
+      "mode": "no-view"
+    }
+  ],
+  "dependencies": {
+    "@raycast/api": "^2.4.1",
+    "@raycast/utils": "^2.3.1"
+  },
+  "devDependencies": {
+    "@raycast/eslint-config": "^2.2.0",
+    "@types/node": "22.19.17",
+    "@types/react": "19.0.10",
+    "eslint": "^9.39.5",
+    "prettier": "^3.9.6",
+    "tsx": "^4.23.13",
+    "typescript": "^5.9.3"
+  },
+  "scripts": {
+    "build": "ray build -e dist",
+    "dev": "ray develop",
+    "fix-lint": "ray lint --fix",
+    "lint": "ray lint",
+    "test": "node --import tsx --test test/*.test.ts",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "echo \"Use npm run publish to publish this Raycast extension.\" && exit 1",
+    "publish": "npx @raycast/api@latest publish"
+  }
+}
