@@ -111,9 +111,25 @@
       "required": false,
       "default": false,
       "label": "Include the go2rtc username and password when opening a preferred app"
+    },
+    {
+      "name": "includeSubstreamsInRootSearch",
+      "title": "Include Substreams",
+      "description": "Add separate Root Search shortcuts for _sub streams when the matching main stream also exists.",
+      "type": "checkbox",
+      "required": false,
+      "default": false,
+      "label": "Show main and substream shortcuts in Root Search"
     }
   ],
   "commands": [
+    {
+      "name": "export-camera-quicklinks",
+      "title": "Add Cameras to Root Search",
+      "subtitle": "go2rtc",
+      "description": "Discover every camera and add it to Raycast Root Search in one batch.",
+      "mode": "no-view"
+    },
     {
       "name": "browse-cameras",
       "title": "Browse Cameras",
@@ -135,13 +151,6 @@
           "required": true
         }
       ]
-    },
-    {
-      "name": "export-camera-quicklinks",
-      "title": "Export Camera Quicklinks",
-      "subtitle": "go2rtc",
-      "description": "Create one importable Raycast Quicklink for every camera.",
-      "mode": "no-view"
     }
   ],
   "dependencies": {

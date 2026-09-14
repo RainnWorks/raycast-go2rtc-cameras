@@ -11,7 +11,7 @@ import {
 import { useCachedPromise } from "@raycast/utils";
 import { CameraActions } from "./camera-actions.js";
 import { fetchCameras } from "./go2rtc.js";
-import { cameraDeeplink, exportQuicklinks } from "./quicklinks.js";
+import { addQuicklinksToRootSearch, cameraDeeplink } from "./quicklinks.js";
 import type { ExtensionPreferences } from "./types.js";
 
 async function loadCameras() {
@@ -35,7 +35,12 @@ export default function BrowseCameras() {
       });
       return;
     }
-    await exportQuicklinks(cameras, cameraDeeplink);
+    const preferences = getPreferenceValues<ExtensionPreferences>();
+    await addQuicklinksToRootSearch(
+      cameras,
+      cameraDeeplink,
+      preferences.includeSubstreamsInRootSearch,
+    );
   }
 
   const errorMessage = error instanceof Error ? error.message : undefined;

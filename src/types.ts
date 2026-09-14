@@ -12,6 +12,7 @@ export interface ExtensionPreferences {
   playbackFormat: PlaybackFormat;
   rtspBaseUrl?: string;
   passCredentialsToPlayer?: boolean;
+  includeSubstreamsInRootSearch?: boolean;
 }
 
 export interface Camera {
@@ -32,4 +33,5 @@ export interface CameraUrls {
 export interface QuicklinkExport {
   name: string;
   link: string;
+  iconName?: string;
 }

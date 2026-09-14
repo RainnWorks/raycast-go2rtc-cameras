@@ -1,16 +1,16 @@
 # go2rtc Cameras for Raycast
 
-Open every camera published by a [go2rtc](https://github.com/AlexxIT/go2rtc) server without manually maintaining a list.
+Put every camera published by a [go2rtc](https://github.com/AlexxIT/go2rtc) server directly in Raycast Root Search without manually maintaining a list.
 
-The extension discovers streams from go2rtc's read-only `/api/streams` endpoint. Pressing Return opens go2rtc's own player in the default browser. If you prefer a desktop player, choose IINA, VLC, mpv, or another app in the extension preferences and optionally make it the default action.
+The extension discovers streams from go2rtc's read-only `/api/streams` endpoint. Run **Add Cameras to Root Search** once, approve Raycast's native import screen, and every camera becomes a top-level result. From then on the everyday flow is simply: open Raycast, type a camera name, and press Return.
 
-## Why the extension uses a camera list
+## Root Search shortcuts
 
-Raycast extension commands are declared statically. A Store extension cannot silently add or remove root-search commands as cameras change. This extension uses the public Raycast APIs instead:
+Raycast extension commands are declared statically, so discovered cameras cannot themselves become dynamic extension commands. The extension generates native Raycast Quicklinks instead; Quicklinks are searchable directly in Root Search.
 
-- **Browse Cameras** is always live and automatically reflects the current go2rtc stream list.
-- **Create Camera Quicklink** opens Raycast's pre-filled Quicklink editor for one camera.
-- **Export Camera Quicklinks** generates one importable Quicklink per camera in a single batch.
+- **Add Cameras to Root Search** discovers the cameras and opens Raycast's native bulk-import confirmation directly—there is no file to find or separate Import command to run.
+- **Browse Cameras** remains available as a live view and always reflects the current go2rtc stream list.
+- **Create Camera Quicklink** can add just one camera from the Browse view.
 
 The generated Quicklinks point back to the **Open Camera** command rather than containing your server address or credentials. Changing your go2rtc address, preferred app, or stream format therefore updates the behavior of every imported Quicklink.
 
@@ -18,7 +18,10 @@ The generated Quicklinks point back to the **Open Camera** command rather than c
 
 1. Enter the address of the go2rtc WebUI, such as `http://192.168.1.10:1984`.
 2. Add the optional WebUI username and password if HTTP Basic Auth is enabled.
-3. Run **Browse Cameras**.
+3. Run **Add Cameras to Root Search** and approve the list Raycast shows.
+4. Type a camera name directly into Root Search and press Return.
+
+Matching `_sub` streams are omitted from Root Search by default so each physical camera appears once. Enable **Include Substreams** if you want both entries. Run **Add Cameras to Root Search** again after adding cameras to go2rtc; Raycast skips existing Quicklinks.
 
 You can paste a root address, a go2rtc base path such as `https://example.test/rtc`, or a full `stream.html`/`api/streams` link. Credentials embedded in URLs are intentionally rejected; use the dedicated password preference instead.
 
@@ -39,11 +42,7 @@ If the go2rtc WebUI uses HTTP Basic Auth, leave **Pass Login to Player** off unl
 
 The action panel always keeps **Open in Browser**, **Open in Preferred App**, **Open Stream With…**, and copyable MP4/HLS/RTSP links available. IINA is launched through Raycast's normal application-opening API; the extension does not use IINA's custom URL scheme.
 
-## Importing all camera Quicklinks
-
-Run **Export Camera Quicklinks**. The extension reveals `go2rtc-camera-quicklinks.json` in Finder (or opens its folder on Windows). Then run Raycast's built-in **Import Quicklinks** command and select that file.
-
-Raycast skips matching duplicates during later imports. Removed cameras are not deleted automatically, because the public extension API does not permit extensions to edit a user's Quicklink library without confirmation.
+Raycast requires confirmation before an extension adds Quicklinks. That one-time import screen is the only extra step; normal camera searches open with one Return. Removed cameras are not deleted automatically, because extensions cannot silently edit a user's Quicklink library.
 
 ## Security notes
 

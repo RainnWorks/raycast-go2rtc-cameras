@@ -1,6 +1,6 @@
 import { Toast, getPreferenceValues, showHUD, showToast } from "@raycast/api";
 import { fetchCameras } from "./go2rtc.js";
-import { cameraDeeplink, exportQuicklinks } from "./quicklinks.js";
+import { addQuicklinksToRootSearch, cameraDeeplink } from "./quicklinks.js";
 import type { ExtensionPreferences } from "./types.js";
 
 export default async function ExportCameraQuicklinks() {
@@ -12,11 +12,15 @@ export default async function ExportCameraQuicklinks() {
       await showHUD("No go2rtc cameras found");
       return;
     }
-    await exportQuicklinks(cameras, cameraDeeplink);
+    await addQuicklinksToRootSearch(
+      cameras,
+      cameraDeeplink,
+      preferences.includeSubstreamsInRootSearch,
+    );
   } catch (error) {
     await showToast({
       style: Toast.Style.Failure,
-      title: "Could Not Export Camera Quicklinks",
+      title: "Could Not Add Camera Shortcuts",
       message:
         error instanceof Error
           ? error.message

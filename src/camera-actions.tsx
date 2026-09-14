@@ -95,7 +95,7 @@ export function CameraActions({
           shortcut={Keyboard.Shortcut.Common.Copy}
         />
         <Action
-          title="Export Quicklinks for All Cameras"
+          title="Add All Cameras to Root Search"
           icon={Icon.Download}
           onAction={onExportAll}
           shortcut={{
