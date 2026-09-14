@@ -56,13 +56,17 @@ export function renderCameraScript(
   const title = oneLine(rootSearchName(camera));
   const description = oneLine(`Open the ${camera.title} go2rtc stream`);
   const metadata = [
-    `# ${MANAGED_MARKER}`,
+    "# Required parameters:",
     "# @raycast.schemaVersion 1",
     `# @raycast.title ${title}`,
     "# @raycast.mode silent",
-    "# @raycast.packageName go2rtc Cameras",
+    "",
+    "# Optional parameters:",
     "# @raycast.icon 🎥",
+    "# @raycast.packageName go2rtc Cameras",
     `# @raycast.description ${description}`,
+    "",
+    `# ${MANAGED_MARKER}`,
   ].join("\n");
 
   if (platform === "Windows") {

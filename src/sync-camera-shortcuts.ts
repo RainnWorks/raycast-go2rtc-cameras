@@ -46,10 +46,9 @@ export default async function SyncCameraShortcuts(props: LaunchProps) {
       style: Toast.Style.Success,
       title: `${result.filePaths.length} Camera Command${result.filePaths.length === 1 ? "" : "s"} Synced`,
       message:
-        "Add the revealed folder once in Raycast Settings → Script Commands. Its path is copied.",
+        "In Add Script Directory, press ⌘⇧G and paste the copied path. Select that exact folder.",
     });
-    if (result.filePaths[0]) await showInFinder(result.filePaths[0]);
-    else await showInFinder(directory);
+    await showInFinder(directory);
   } catch (error) {
     if (props.launchType === LaunchType.Background) return;
     await showToast({

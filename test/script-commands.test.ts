@@ -49,6 +49,11 @@ test("renders macOS and Windows camera commands", () => {
   );
 
   assert.match(macOS, /^#!\/bin\/bash/);
+  assert.match(
+    macOS,
+    /# Required parameters:\n# @raycast\.schemaVersion 1\n# @raycast\.title Mia Room Camera\n# @raycast\.mode silent/,
+  );
+  assert.match(macOS, /# Optional parameters:\n# @raycast\.icon 🎥/);
   assert.match(macOS, /@raycast.title Mia Room Camera/);
   assert.match(macOS, /open 'raycast:\/\//);
   assert.match(windows, /Start-Process 'raycast:\/\//);

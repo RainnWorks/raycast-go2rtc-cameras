@@ -20,7 +20,7 @@ The generated commands point back to the extension's **Open Camera** command. Th
 1. Enter the address of the go2rtc WebUI, such as `http://192.168.1.10:1984`.
 2. Add the optional WebUI username and password if HTTP Basic Auth is enabled.
 3. Run **Sync Camera Shortcuts**. The extension generates the commands, reveals their dedicated folder, and copies its path.
-4. Once only, open Raycast Settings → Script Commands, choose **Add Script Directory**, and select the revealed folder.
+4. Once only, open Raycast Settings → Script Commands and choose **Add Script Directory**. In the folder picker, press `⌘⇧G`, paste the copied path, press Return, then select that exact folder. Do not select whichever folder the picker happened to open in.
 5. Type a camera name directly into Root Search and press Return.
 
 Raycast watches the folder for changes, so there is no import step after the one-time folder approval. Matching `_sub` streams are omitted by default so each physical camera appears once. Enable **Include Substreams** if you want both entries.
