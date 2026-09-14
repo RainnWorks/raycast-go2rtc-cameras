@@ -14,12 +14,11 @@ import {
   buildCameraUrls,
   selectPlaybackUrl,
 } from "./go2rtc.js";
-import { cameraDeeplink } from "./quicklinks.js";
 import type { Camera, ExtensionPreferences } from "./types.js";
 
 interface CameraActionsProps {
   camera: Camera;
-  onExportAll: () => Promise<void>;
+  onSyncShortcuts: () => Promise<void>;
   onRefresh: () => void | Promise<void>;
 }
 
@@ -30,7 +29,7 @@ async function copyLink(link: string, title: string) {
 
 export function CameraActions({
   camera,
-  onExportAll,
+  onSyncShortcuts,
   onRefresh,
 }: CameraActionsProps) {
   const preferences = getPreferenceValues<ExtensionPreferences>();
@@ -88,16 +87,10 @@ export function CameraActions({
       </ActionPanel.Section>
 
       <ActionPanel.Section title="Shortcuts">
-        <Action.CreateQuicklink
-          title="Create Camera Quicklink"
-          quicklink={{ name: camera.title, link: cameraDeeplink(camera.id) }}
-          icon={Icon.Link}
-          shortcut={Keyboard.Shortcut.Common.Copy}
-        />
         <Action
-          title="Add All Cameras to Root Search"
-          icon={Icon.Download}
-          onAction={onExportAll}
+          title="Sync Root Search Camera Commands"
+          icon={Icon.ArrowClockwise}
+          onAction={onSyncShortcuts}
           shortcut={{
             macOS: { modifiers: ["cmd", "shift"], key: "e" },
             Windows: { modifiers: ["ctrl", "shift"], key: "e" },

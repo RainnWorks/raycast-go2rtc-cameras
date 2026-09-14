@@ -11,7 +11,7 @@ import {
 import { useCachedPromise } from "@raycast/utils";
 import { CameraActions } from "./camera-actions.js";
 import { fetchCameras } from "./go2rtc.js";
-import { addQuicklinksToRootSearch, cameraDeeplink } from "./quicklinks.js";
+import { syncShortcuts } from "./sync-camera-shortcuts.js";
 import type { ExtensionPreferences } from "./types.js";
 
 async function loadCameras() {
@@ -27,20 +27,15 @@ export default function BrowseCameras() {
     revalidate,
   } = useCachedPromise(loadCameras);
 
-  async function handleExportAll() {
+  async function handleSyncShortcuts() {
     if (cameras.length === 0) {
       await showToast({
         style: Toast.Style.Failure,
-        title: "There are no cameras to export",
+        title: "There are no cameras to sync",
       });
       return;
     }
-    const preferences = getPreferenceValues<ExtensionPreferences>();
-    await addQuicklinksToRootSearch(
-      cameras,
-      cameraDeeplink,
-      preferences.includeSubstreamsInRootSearch,
-    );
+    await syncShortcuts();
   }
 
   const errorMessage = error instanceof Error ? error.message : undefined;
@@ -89,7 +84,7 @@ export default function BrowseCameras() {
           actions={
             <CameraActions
               camera={camera}
-              onExportAll={handleExportAll}
+              onSyncShortcuts={handleSyncShortcuts}
               onRefresh={revalidate}
             />
           }

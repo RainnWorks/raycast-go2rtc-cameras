@@ -2,7 +2,7 @@
   "$schema": "https://www.raycast.com/schemas/extension.json",
   "name": "go2rtc-cameras",
   "title": "Go2rtc Cameras",
-  "description": "Find every camera on a go2rtc server and open it in a browser or your preferred media player.",
+  "description": "Keep every go2rtc camera searchable from Raycast Root Search and open it in your preferred player.",
   "icon": "icon.png",
   "author": "rainnworks",
   "platforms": [
@@ -124,11 +124,12 @@
   ],
   "commands": [
     {
-      "name": "export-camera-quicklinks",
-      "title": "Add Cameras to Root Search",
+      "name": "sync-camera-shortcuts",
+      "title": "Sync Camera Shortcuts",
       "subtitle": "go2rtc",
-      "description": "Discover every camera and add it to Raycast Root Search in one batch.",
-      "mode": "no-view"
+      "description": "Add, update, and remove managed Root Search commands to match go2rtc.",
+      "mode": "no-view",
+      "interval": "5m"
     },
     {
       "name": "browse-cameras",
@@ -141,7 +142,7 @@
       "name": "open-camera",
       "title": "Open Camera",
       "subtitle": "go2rtc",
-      "description": "Open a named go2rtc camera. Useful as a Raycast Quicklink target.",
+      "description": "Open a named go2rtc camera. Used by the managed camera shortcuts.",
       "mode": "no-view",
       "arguments": [
         {

@@ -29,9 +29,3 @@ export interface CameraUrls {
   hls: string;
   rtsp: string;
 }
-
-export interface QuicklinkExport {
-  name: string;
-  link: string;
-  iconName?: string;
-}
