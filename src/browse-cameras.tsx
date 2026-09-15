@@ -2,16 +2,18 @@ import {
   Action,
   ActionPanel,
   Icon,
+  LaunchType,
   List,
   Toast,
   getPreferenceValues,
+  launchCommand,
   openExtensionPreferences,
   showToast,
 } from "@raycast/api";
 import { useCachedPromise } from "@raycast/utils";
 import { CameraActions } from "./camera-actions.js";
 import { fetchCameras } from "./go2rtc.js";
-import { syncShortcuts } from "./sync-camera-shortcuts.js";
+import { getRootSearchVerification } from "./root-search.js";
 import type { ExtensionPreferences } from "./types.js";
 
 async function loadCameras() {
@@ -26,6 +28,10 @@ export default function BrowseCameras() {
     isLoading,
     revalidate,
   } = useCachedPromise(loadCameras);
+  const {
+    data: rootSearchVerification,
+    isLoading: isLoadingRootSearchVerification,
+  } = useCachedPromise(getRootSearchVerification);
 
   async function handleSyncShortcuts() {
     if (cameras.length === 0) {
@@ -35,7 +41,10 @@ export default function BrowseCameras() {
       });
       return;
     }
-    await syncShortcuts();
+    await launchCommand({
+      name: "sync-camera-shortcuts",
+      type: LaunchType.UserInitiated,
+    });
   }
 
   const errorMessage = error instanceof Error ? error.message : undefined;
@@ -58,6 +67,26 @@ export default function BrowseCameras() {
                 title="Open Extension Preferences"
                 icon={Icon.Gear}
                 onAction={openExtensionPreferences}
+              />
+            </ActionPanel>
+          }
+        />
+      ) : null}
+
+      {!isLoading &&
+      !isLoadingRootSearchVerification &&
+      cameras.length > 0 &&
+      !rootSearchVerification ? (
+        <List.Item
+          icon={Icon.ExclamationMark}
+          title="Finish Root Search Setup"
+          subtitle="Add the camera command folder in Raycast Settings"
+          actions={
+            <ActionPanel>
+              <Action
+                title="Sync Commands and Show Setup"
+                icon={Icon.ArrowClockwise}
+                onAction={handleSyncShortcuts}
               />
             </ActionPanel>
           }

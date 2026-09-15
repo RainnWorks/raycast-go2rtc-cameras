@@ -1,4 +1,5 @@
 import {
+  type LaunchProps,
   Toast,
   closeMainWindow,
   getPreferenceValues,
@@ -11,13 +12,19 @@ import {
   buildCameraUrls,
   selectPlaybackUrl,
 } from "./go2rtc.js";
+import {
+  MANAGED_SCRIPT_LAUNCH_SOURCE,
+  markRootSearchVerified,
+  type RootSearchLaunchContext,
+} from "./root-search.js";
 import type { ExtensionPreferences } from "./types.js";
 
-type OpenCameraProps = {
+type OpenCameraProps = LaunchProps<{
   arguments: {
     camera: string;
   };
-};
+  launchContext?: RootSearchLaunchContext;
+}>;
 
 export default async function OpenCamera(props: OpenCameraProps) {
   const preferences = getPreferenceValues<ExtensionPreferences>();
@@ -29,6 +36,12 @@ export default async function OpenCamera(props: OpenCameraProps) {
   }
 
   try {
+    if (props.launchContext?.source === MANAGED_SCRIPT_LAUNCH_SOURCE) {
+      // This launch proves that Raycast indexed the managed Script Commands folder.
+      // Verification should never prevent the camera itself from opening.
+      await markRootSearchVerified().catch(() => undefined);
+    }
+
     const urls = buildCameraUrls(
       preferences.serverUrl,
       cameraId,

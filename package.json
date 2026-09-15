@@ -139,6 +139,18 @@
       "mode": "view"
     },
     {
+      "name": "setup-root-search",
+      "title": "Set Up Cameras in Root Search",
+      "subtitle": "go2rtc",
+      "description": "Finish or repair the one-time Raycast Script Commands folder setup.",
+      "mode": "view",
+      "keywords": [
+        "script commands",
+        "shortcuts",
+        "settings"
+      ]
+    },
+    {
       "name": "open-camera",
       "title": "Open Camera",
       "subtitle": "go2rtc",

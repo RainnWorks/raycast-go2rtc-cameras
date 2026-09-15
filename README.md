@@ -19,11 +19,13 @@ The generated commands point back to the extension's **Open Camera** command. Th
 
 1. Enter the address of the go2rtc WebUI, such as `http://192.168.1.10:1984`.
 2. Add the optional WebUI username and password if HTTP Basic Auth is enabled.
-3. Run **Sync Camera Shortcuts**. The extension generates the commands, reveals their dedicated folder, and copies its path.
-4. Once only, open Raycast Settings → Script Commands and choose **Add Script Directory**. In the folder picker, press `⌘⇧G`, paste the copied path, press Return, then select that exact folder. Do not select whichever folder the picker happened to open in.
-5. Type a camera name directly into Root Search and press Return.
+3. Run **Sync Camera Shortcuts**. The extension generates the commands, copies their dedicated folder path, and opens a setup guide until direct search has been verified.
+4. Once only, open Raycast Settings with `⌘,`. In the **Extensions** section choose **Script Commands**, then press **+** beside **Script Folders**. In the folder picker, press `⌘⇧G`, paste the copied path, press Return, then select that exact `root-search-commands` folder. Do not select Downloads or its parent.
+5. Type a camera name directly into Root Search and press Return. That successful launch verifies setup automatically, so subsequent manual syncs stay out of your way.
 
 Raycast watches the folder for changes, so there is no import step after the one-time folder approval. Matching `_sub` streams are omitted by default so each physical camera appears once. Enable **Include Substreams** if you want both entries.
+
+Raycast does not expose the Script Folders list through its extension API. The extension therefore distinguishes **generated** from **verified**: syncing proves the camera command files are correct, while successfully launching any generated camera command proves Raycast has indexed their folder. If the folder is later removed from Raycast Settings, use **Set Up Cameras in Root Search** to add it again.
 
 Sync is conservative: if go2rtc is unreachable or returns an error, existing commands are left untouched. A successful empty stream list removes every managed camera command. Files not marked as managed by this extension are never deleted.
 
